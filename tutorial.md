@@ -4,108 +4,93 @@
 
 このハンズオンでは, ADK の Built-in tools である `BigQueryToolSet` を使用して, 自然言語でデータ分析を行うエージェントを構築します.
 
-## Google Cloud への認証確認
+## Step 1-1. Google Cloud への認証確認
 
-まず、Google Cloud への認証が正しく設定されているか確認します。
-
-以下のコマンドを実行して、認証状態を確認してください。
+Google Cloud への認証状況を確認します.
 
 ```bash
-gcloud auth list
+gcloud config get-value config
 ```
+
+もし
+```
+Credentialed Accounts
+
+ACTIVE: *
+ACCOUNT: hogehoge@example.com
+```
+のように
 
 認証されていない場合は、以下のコマンドで認証を行います。
 
 ```bash
-gcloud auth application-default login
+gcloud auth application-default login --no-launch-browser
 ```
 
-ブラウザが開くので、Google アカウントでログインしてください。
+を実行してログインを行います (ログイン URL が出てくるので, URL をクリック, verification code を入力しましょう)
 
-## プロジェクトとリージョンの設定
+## Step 1-2. プロジェクト ID の設定
 
-次に、使用する Google Cloud プロジェクトとリージョンを設定します。
-
-プロジェクト ID を環境変数に設定します。
+次に, 使用する Google Cloud プロジェクト ID を設定します.
 
 ```bash
-export PROJECT_ID=<your-project-id>
-gcloud config set project $PROJECT_ID
+gcloud config set project PLEASE_SPECIFY_YOUR_PROJECT_ID
 ```
 
-リージョンも設定します（例: us-central1）。
+`PLEASE_SPECIFY_YOUR_PROJECT_ID` の部分は, ご自身のプロジェクト ID に置き換えてください.
+念の為, 正しく設定されているか確認しましょう.
 
 ```bash
-export REGION=us-central1
+gcloud config get-value project
 ```
 
-## 必要な API の有効化
+設定したプロジェクト ID は, 後ほど使用するため環境変数に設定しておきます.
 
-BigQuery API を有効化します。
+```bash
+export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
+```
 
+## Step 1-3. 必要な API の有効化
+
+BigQuery API を有効化します.
 ```bash
 gcloud services enable bigquery.googleapis.com
 ```
 
-API の有効化には数分かかる場合があります。
+## Set Up BigQuery Data Agent
 
-## agents ディレクトリと agent.py の作成
-
-agents ディレクトリを作成し、agent.py ファイルを作成します。
+### Python 環境のセットアップ
 
 ```bash
-mkdir -p agents
+python -m venv .venv
 ```
 
-agents/agent.py を以下の内容で作成します。
-
-```python
-from google.adk.agents import Agent
-from google.adk.tools.bigquery import BigQueryToolSet
-
-# BigQuery の public dataset を指定
-DATASET = "bigquery-public-data.google_cloud_release_notes.release_notes"
-
-# BigQueryToolSet を初期化
-bigquery_tools = BigQueryToolSet(
-    project_id="<your-project-id>",  # プロジェクト ID を指定
-    dataset_id=DATASET
-)
-
-# エージェントを作成
-root_agent = Agent(
-    model="gemini-2.0-flash-exp",
-    tools=bigquery_tools.get_tools(),
-    system_instruction=f"""
-    あなたは BigQuery データ分析のエキスパートです。
-    {DATASET} データセットに対して、ユーザーの質問に基づいてデータ分析を行います。
-
-    - 自然言語の質問を SQL クエリに変換して実行してください
-    - 結果をわかりやすく説明してください
-    - 必要に応じて複数のクエリを実行して詳細な分析を提供してください
-    """
-)
+```bash
+source .venv/bin/activate
 ```
-
-上記のファイルで、`<your-project-id>` を実際のプロジェクト ID に置き換えてください。
-
-## 依存関係のインストール
-
-ADK をインストールします。
 
 ```bash
 pip install google-adk
 ```
+
+## BigQuery Data Agent
+
+ADK の Built-in tools なので, 実はこちらもかなり簡単に Agent 作成ができちゃいます
+まずは対象のファイルを眺めましょう
+
+```bash
+cloudshell edit agents/agent.py
+```
+
+上記のファイルで、`<your-project-id>` を実際のプロジェクト ID に置き換えてください。
 
 ## エージェントの起動
 
 作成したエージェントを起動します。
 
 ```bash
-adk run agents/agent.py
+adk web --port 8080
 ```
-
-エージェントが起動すると、対話型のプロンプトが表示されます。
 
 ## エージェントに質問する
 
