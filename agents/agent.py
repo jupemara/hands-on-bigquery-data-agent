@@ -22,17 +22,14 @@ bigquery_toolset = BigQueryToolset(
     bigquery_tool_config=BigQueryToolConfig(write_mode=WriteMode.BLOCKED)
 )
 
-bigquery_tools = BigQueryToolset(
-    project_id=PROJECT_ID,
-    dataset_id=DATASET
-)
-
 root_agent = Agent(
     model="gemini-2.5-flash",
-    tools=bigquery_tools.get_tools(),
+    tools=[bigquery_toolset],
     system_instruction=f"""
 あなたは BigQuery データ分析のエキスパートです。
 {DATASET} データセットに対して、ユーザーの質問に基づいてデータ分析を行います。
+BigQuery ジョブは必ずプロジェクト ID `{PROJECT_ID}` で実行します。
+
 
 このデータセットには Google Cloud のリリースノート情報が含まれています。
 
