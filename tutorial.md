@@ -78,15 +78,15 @@ ADK の Built-in tools なので, 実はこちらもかなり簡単に Agent 作
 cloudshell edit agents/agent.py
 ```
 
-上記のファイルで、`<your-project-id>` を実際のプロジェクト ID に置き換えてください。
-
-## エージェントの起動
+### エージェントの起動
 
 作成したエージェントを起動します。
 
 ```bash
 adk web --port 8080
 ```
+
+右上の `Web Preview` から Cloud Shell 上の 8080 を見に行きましょう
 
 ## エージェントに質問する
 
