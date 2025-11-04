@@ -2,7 +2,7 @@
 
 ## はじめに
 
-このハンズオンでは、ADK (Agent Development Kit) の builtin tools である BigQueryToolSet を使用して、自然言語でデータ分析を行うエージェントを構築します。
+このハンズオンでは, ADK の Built-in tools である `BigQueryToolSet` を使用して, 自然言語でデータ分析を行うエージェントを構築します.
 
 ## Google Cloud への認証確認
 
