@@ -124,30 +124,7 @@ Compute Engine に関連するリリースノートは何件ありますか？
 
 エージェントは自動的に適切な SQL クエリを生成し、BigQuery に対して実行し、結果を返します。
 
-## クリーンアップ
-
-ハンズオンが完了したら、エージェントを終了します。
-
-プロンプトで `exit` または `quit` と入力するか、Ctrl+C を押してください。
-
-## まとめ
-
-おめでとうございます！
-
-このハンズオンでは、以下のことを学びました。
-
-- ADK の BigQueryToolSet の基本的な使い方
-- 自然言語でデータ分析を行うエージェントの構築
-- BigQuery public dataset を活用したデータ分析
-
-### 次のステップ
-
-- 他の BigQuery public datasets を試してみる
-- カスタムデータセットでエージェントを構築する
-- 複数のツールを組み合わせたより高度なエージェントを作成する
-
-### 参考リンク
+## 参考リンク
 
 - [ADK BigQueryToolSet ドキュメント](https://google.github.io/adk-docs/tools/built-in-tools/#bigquery)
-- [BigQuery public datasets](https://cloud.google.com/bigquery/public-data)
 - [ADK 公式ドキュメント](https://google.github.io/adk-docs/)
