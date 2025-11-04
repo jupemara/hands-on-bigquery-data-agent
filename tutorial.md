@@ -9,19 +9,14 @@
 Google Cloud への認証状況を確認します.
 
 ```bash
-gcloud config get-value config
+gcloud auth list
 ```
 
-もし
+```bash
+gcloud config get-value account
 ```
-Credentialed Accounts
 
-ACTIVE: *
-ACCOUNT: hogehoge@example.com
-```
-のように
-
-認証されていない場合は、以下のコマンドで認証を行います。
+もし期待したユーザが認証されていない場合は, 以下のコマンドで認証を行います.
 
 ```bash
 gcloud auth application-default login --no-launch-browser
