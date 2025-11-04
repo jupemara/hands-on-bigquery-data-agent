@@ -1,6 +1,8 @@
 import os
 from google.adk.agents import Agent
-from google.adk.tools.bigquery import BigQueryToolSet
+from google.adk.tools.bigquery import BigQueryToolset
+from google.adk.tools.bigquery.config import BigQueryToolConfig
+from google.adk.tools.bigquery.config import WriteMode
 
 DATASET = "bigquery-public-data.google_cloud_release_notes.release_notes"
 PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT")
@@ -10,7 +12,15 @@ if not PROJECT_ID:
         "例: export GOOGLE_CLOUD_PROJECT=your-project-id"
     )
 
-bigquery_tools = BigQueryToolSet(
+application_default_credentials, _ = google.auth.default()
+bigquery_toolset = BigQueryToolset(
+    credentials_config=BigQueryCredentialsConfig(
+        credentials=application_default_credentials
+    ),
+    bigquery_tool_config=BigQueryToolConfig(write_mode=WriteMode.BLOCKED)
+)
+
+bigquery_tools = BigQueryToolset(
     project_id=PROJECT_ID,
     dataset_id=DATASET
 )
