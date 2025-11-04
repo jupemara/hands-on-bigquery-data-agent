@@ -51,6 +51,7 @@ BigQuery API を有効化します.
 ```bash
 gcloud services enable bigquery.googleapis.com
 ```
+新規のプロジェクトの場合, このコマンドは数分程度かかる可能性があります.
 
 ## Set Up BigQuery Data Agent
 
