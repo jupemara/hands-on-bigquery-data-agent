@@ -3,6 +3,7 @@ from google.adk.agents import Agent
 from google.adk.tools.bigquery import BigQueryToolset
 from google.adk.tools.bigquery.config import BigQueryToolConfig
 from google.adk.tools.bigquery.config import WriteMode
+import google.auth
 
 DATASET = "bigquery-public-data.google_cloud_release_notes.release_notes"
 PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT")
