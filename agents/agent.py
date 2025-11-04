@@ -1,5 +1,5 @@
 import os
-from google.adk.agents import Agent
+from google.adk.agents import LlmAgent
 from google.adk.tools.bigquery import BigQueryToolset
 from google.adk.tools.bigquery import BigQueryCredentialsConfig
 from google.adk.tools.bigquery.config import BigQueryToolConfig
@@ -22,9 +22,9 @@ bigquery_toolset = BigQueryToolset(
     bigquery_tool_config=BigQueryToolConfig(write_mode=WriteMode.BLOCKED)
 )
 
-root_agent = Agent(
+root_agent = LlmAgent(
     model="gemini-2.5-flash",
-    tools=[bigquery_toolset],
+    name="bigquery_data_agent",
     instruction=f"""
 あなたは BigQuery データ分析のエキスパートです。
 {DATASET} データセットに対して、ユーザーの質問に基づいてデータ分析を行います。
@@ -39,5 +39,6 @@ BigQuery ジョブは必ずプロジェクト ID `{PROJECT_ID}` で実行しま�
 - 必要に応じて複数のクエリを実行して詳細な分析を提供してください
 - データの傾向やパターンを見つけて洞察を提供してください
 - 日本語で応答してください
-"""
+""",
+    tools=[bigquery_toolset],
 )
