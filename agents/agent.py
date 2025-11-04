@@ -1,6 +1,7 @@
 import os
 from google.adk.agents import Agent
 from google.adk.tools.bigquery import BigQueryToolset
+from google.adk.tools.bigquery import BigQueryCredentialsConfig
 from google.adk.tools.bigquery.config import BigQueryToolConfig
 from google.adk.tools.bigquery.config import WriteMode
 import google.auth
